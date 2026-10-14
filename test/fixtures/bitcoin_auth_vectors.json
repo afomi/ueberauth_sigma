@@ -1,0 +1,37 @@
+{
+  "wif": "KwntMbt59tTsj8xqpqYqRRWufyjGunvhSyeMo3NTYpFYzZbXJ5Hp",
+  "pubkey": "034f355bdcb7cc0af728ef3cceb9615d90684bb5b2ca5f859ab0f0b704075871aa",
+  "timestamp": "2026-10-14T18:00:00.000Z",
+  "request_path": "/api/auth/oauth2/token",
+  "fields": [
+    [
+      "grant_type",
+      "authorization_code"
+    ],
+    [
+      "code",
+      "abc DEF~*-._!'()"
+    ],
+    [
+      "redirect_uri",
+      "http://localhost:4000/auth/sigma/callback?x=1&y=é"
+    ],
+    [
+      "client_id",
+      "qart-dev"
+    ],
+    [
+      "code_verifier",
+      "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"
+    ]
+  ],
+  "body": "grant_type=authorization_code&code=abc+DEF%7E*-._%21%27%28%29&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fauth%2Fsigma%2Fcallback%3Fx%3D1%26y%3D%C3%A9&client_id=qart-dev&code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
+  "bsm_token": "034f355bdcb7cc0af728ef3cceb9615d90684bb5b2ca5f859ab0f0b704075871aa|bsm|2026-10-14T18:00:00.000Z|/api/auth/oauth2/token|H+xFHAZEm1T8H4FVJ8PPpLZjVhTC9TRYbqjfy+wo4Mh0c4P8VeGmZT/Haiw+gPoYeerz8+C/cmtFZjosBjLyfdc=",
+  "bsm_token_no_body": "034f355bdcb7cc0af728ef3cceb9615d90684bb5b2ca5f859ab0f0b704075871aa|bsm|2026-10-14T18:00:00.000Z|/api/auth/oauth2/token|IKFNKJA20REeskkyxbkKvLHKJXaxyfJv9bqdIXsDHUBaOzHsUScfq/sdbv9MTaMkGfj43Eplcrvjeaft3tNuraE=",
+  "brc77_token": "034f355bdcb7cc0af728ef3cceb9615d90684bb5b2ca5f859ab0f0b704075871aa|brc77|2026-10-14T18:00:00.000Z|/api/auth/oauth2/token|QkIzAQNPNVvct8wK9yjvPM65YV2QaEu1sspfhZqw8LcEB1hxqgAUGm0jm3kbYEWThgBtTP+GXwKT7h1W94zBFY3l41aU5jBFAiEAkHPo9K59H1zflLZQ0PVjadWS8f0oYTJHPVHnQmYopV8CIBaWo+Xhu4DligRkBboABIc01HA09jQ1lC/Ubxdb59Y7",
+  "self_check": [
+    true,
+    true,
+    true
+  ]
+}
