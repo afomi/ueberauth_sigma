@@ -15,12 +15,15 @@ defmodule Sigma.BitcoinAuth do
 
   alias BSV.{Message, PrivKey, PubKey}
 
+  # WIF version bytes: mainnet, testnet.
+  @wif_versions [<<0x80>>, <<0xEF>>]
+
   @doc """
   Makes a token for `request_path` and `body` with a WIF private key.
   """
   @spec token(String.t(), String.t(), String.t() | nil, String.t()) :: String.t()
   def token(wif, request_path, body \\ nil, timestamp \\ now()) do
-    privkey = PrivKey.from_wif!(wif)
+    privkey = privkey_from_wif!(wif)
     signature = Message.sign(message(request_path, timestamp, body), privkey)
 
     Enum.join([pubkey_hex(privkey), "bsm", timestamp, request_path, signature], "|")
@@ -57,7 +60,7 @@ defmodule Sigma.BitcoinAuth do
   client's `accountPubkey`.
   """
   @spec pubkey(String.t()) :: String.t()
-  def pubkey(wif), do: wif |> PrivKey.from_wif!() |> pubkey_hex()
+  def pubkey(wif), do: wif |> privkey_from_wif!() |> pubkey_hex()
 
   @doc """
   Encodes form fields exactly as JavaScript's `URLSearchParams#toString/0`.
@@ -90,6 +93,27 @@ defmodule Sigma.BitcoinAuth do
   defp body_hash(nil), do: ""
   defp body_hash(""), do: ""
   defp body_hash(body), do: :crypto.hash(:sha256, body) |> Base.encode16(case: :lower)
+
+  # The member key only signs; Sigma knows it by its public key, which is the
+  # same on either network. So accept a mainnet or testnet WIF whatever network
+  # the host app runs BSV on (`PrivKey.from_wif!/1` follows that global setting,
+  # and an app taking testnet payments would reject a mainnet member key).
+  # The error never includes the value: it is a private key.
+  defp privkey_from_wif!(wif) when is_binary(wif) do
+    case B58.decode58_check(wif) do
+      {:ok, {<<d::binary-32, 1>>, version}} when version in @wif_versions ->
+        %PrivKey{d: d, compressed: true}
+
+      {:ok, {<<d::binary-32>>, version}} when version in @wif_versions ->
+        %PrivKey{d: d, compressed: false}
+
+      _ ->
+        raise ArgumentError, "the Sigma member key is not a mainnet or testnet WIF private key"
+    end
+  end
+
+  defp privkey_from_wif!(_wif),
+    do: raise(ArgumentError, "the Sigma member key is not set; expected a WIF string")
 
   defp pubkey_hex(privkey),
     do: privkey |> PubKey.from_privkey() |> PubKey.to_binary(encoding: :hex)

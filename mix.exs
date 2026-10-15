@@ -30,6 +30,8 @@ defmodule UeberauthSigma.MixProject do
       {:req, "~> 0.5"},
       {:jose, "~> 1.11"},
       {:bsv, "~> 2.1"},
+      # Base58Check, used directly to decode the member WIF for either network.
+      {:basefiftyeight, "~> 0.1"},
       {:plug, "~> 1.14"},
       {:jason, "~> 1.4"}
     ]
