@@ -21,7 +21,7 @@ jobs:
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.otp }}
-      - run: mix deps.get
+      - run: mix deps.get --check-locked
       - run: mix format --check-formatted
         if: matrix.elixir == '1.19'
       - run: mix compile --warnings-as-errors
